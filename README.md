@@ -37,8 +37,6 @@ echo 'eval "$(pyenv init -)"' >> ~/.profile
 ```
 exec "$SHELL"
 ```
-
->[!Note]
 > At this point, you should have pyenv installed, try running `pyenv versions` to see the default python version on the system
 
 8. Clone the virtualenv plugin 
@@ -75,3 +73,6 @@ pip install -r PATH_TO_requirements.txt
 ```
 
 ### Done! You should be ready to go! 
+
+> [!Note]
+> If anything goes wrong, just remove PATH_TO_YOUR_DIR and the lines from ~/.bashrc as well as ~/.profile and you'd be back to original.
