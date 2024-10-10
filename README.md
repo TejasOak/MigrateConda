@@ -1,5 +1,5 @@
 # CondaToMiniforge3
-## Guidelines for migrating a conda environment to pyenv
+## Guidelines for migrating a conda environment to miniforge3
 
 1. **Activate** your conda environment as usual. Note the exact python version the environment is using.
 2. Run `mkdir conda_requirements && cd conda_requirements`
