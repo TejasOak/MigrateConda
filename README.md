@@ -1,78 +1,31 @@
-# CondaToPyenv
+# CondaToMiniforge3
 ## Guidelines for migrating a conda environment to pyenv
 
-1. Activate your conda environment as usual. Note the exact python version the environment is using.
- 
-```
-  python --version
-  ```
+1. **Activate** your conda environment as usual. Note the exact python version the environment is using.
+2. Run `mkdir conda_requirements && cd conda_requirements`
+3. Copy conda_req_envs.sh here and set permissions: `chmod +x conda_req_envs.sh`
+4. Run `source ./conda_req_envs.sh`
+5. Download Miniforge3:
 
-2. Export the list of packages from conda supported by pip's format:
+   `curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"`
+
+6. By default, Miniforge3 installs into ~/miniforge3. I do not recommend this because this would fill up that home dir. Rather install into your work machine:
+
+      `bash Miniforge3-$(uname)-$(uname -m).sh -p /vol/aibn_yourmachine/data1/your_username/opt/miniforge3`
+   Replace `aibn_yourmachine/data1/your_username/` with the appropriate path. Ensure that miniforge3 dir does not already exist.
+   Go ahead and install and accept the Licenses.
+7. Run `micromamba activate` as suggested by the installer. Set `conda config --set auto_activate_base false` in .bashrc to stop auto-activating base env. Remember to do `source .bashrc`.
+8. If installation is successful, run:
    ```
-   pip list --format=freeze > requirements.txt
-   ```  
-3. Create/Navigate to the directory where you wish to install pyenv (all python versions and environments will be located here later on.)
-4. Clone the pyenv repo 
-```
-git clone https://github.com/pyenv/pyenv.git PATH_TO_YOUR_DIR
-```
-5. Configure your shell (bashrc) to use pyenv
-```
-echo 'export PYENV_ROOT="PATH_TO_YOUR_DIR"' >> ~/.bashrc
-```
-```
-echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
-echo 'eval "$(pyenv init -)"' >> ~/.bashrc
-echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n eval "$(pyenv init -)"\nfi' >> ~/.bashrc
-```
-6. Also configure ~/.profile (you may alternatively have `~/.bash_profile` or `~/.bash_login` ; see https://github.com/pyenv/pyenv?tab=readme-ov-file#set-up-your-shell-environment-for-pyenv for help) 
+   chmod +x create_conda_env.sh
+   source ./create_conda_env.sh yourfile_requirements.txt`
+   ```
 
-```
-echo 'export PYENV_ROOT="PATH_TO_YOUR_DIR"' >> ~/.profile
-echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.profile
-echo 'eval "$(pyenv init -)"' >> ~/.profile
+   Replace yourfile_requirements.txt with the requirements file that was created for the corresponding env. Repeat step 8 for all other required env creation.
 
-```
-7. Replace the shell instance to apply the changes 
-```
-exec "$SHELL"
-```
-> At this point, you should have pyenv installed, try running `pyenv versions` to see the default python version on the system
 
-8. Clone the virtualenv plugin 
-```
-git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
-```
-
-9. Install the needed python version within pyenv,e.g.
-```
-pyenv install 3.10.14
-```
-
-10. create a vanilla environment (with the same name as conda?)
-
-```
-pyenv virtualenv 3.10.14 my_env
-exec "$SHELL"
-```
-11. Activate the environment 
-
-```
-pyenv activate my_env
-
-```
-12. Double check to see if pip is being served from pyenv or global python  
-```
-which pip 
-pip --version
-```
-
-13. Use the requirement file to load the packages 
-```
-pip install -r PATH_TO_requirements.txt
-```
 
 ### Done! You should be ready to go! 
 
 > [!Note]
-> If anything goes wrong, just remove PATH_TO_YOUR_DIR and the lines from ~/.bashrc as well as ~/.profile and you'd be back to original.
+> If anything goes wrong, well ... Good Luck! (Don't worry, it won't)
