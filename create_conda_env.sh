@@ -24,6 +24,7 @@ if [ -n "$env_name" ] && [ -n "$python_version" ]; then
     echo "Conda environment '$env_name' created with Python version $python_version."
 
     # Activate the newly created Conda environment
+    conda init
     conda activate "$env_name"
 
     # Install the packages from the requirements file
