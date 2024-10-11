@@ -4,18 +4,30 @@
 1. **Activate** your conda environment as usual. Note the exact python version the environment is using.
 2. Run `mkdir conda_requirements && cd conda_requirements`
 3. Copy conda_req_envs.sh here and set permissions: `chmod +x conda_req_envs.sh`
-4. Run `source ./conda_req_envs.sh`
-5. Download Miniforge3:
+4. Run `source ./conda_req_envs.sh`. This would create requirement files for all the environments that you currently have.
+5. **Delete Anaconda completely**:
+     ```
+     conda deactivate
+     conda init --reverse
+     ```
+     Remove all references to Conda from your .bashrc file
+      ```
+      rm -rf ~/.condarc ~/.conda ~/.continuum
+      rm -rf ~/anaconda3 # or your anaconda3 dir path
+      ```
+   
+7. Download Miniforge3:
 
    `curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"`
 
-6. By default, Miniforge3 installs into ~/miniforge3. I do not recommend this because this would fill up that home dir. Rather install into your work machine:
+8. By default, Miniforge3 installs into ~/miniforge3. I do not recommend this because this would fill up that home dir. Rather install into your work machine:
 
       `bash Miniforge3-$(uname)-$(uname -m).sh -p /vol/aibn_yourmachine/data1/your_username/opt/miniforge3`
+
    Replace `aibn_yourmachine/data1/your_username/` with the appropriate path. Ensure that miniforge3 dir does not already exist.
    Go ahead and install and accept the Licenses.
-7. Run `micromamba activate` as suggested by the installer. Set `conda config --set auto_activate_base false` in .bashrc to stop auto-activating base env. Remember to do `source .bashrc`.
-8. If installation is successful, run:
+10. Run `micromamba activate` as suggested by the installer. Set `conda config --set auto_activate_base false` to stop auto-activating base env. Remember to do `source .bashrc`.
+11. If installation is successful, run:
    ```
    chmod +x create_conda_env.sh
    source ./create_conda_env.sh yourfile_requirements.txt`
@@ -23,6 +35,7 @@
 
    Replace yourfile_requirements.txt with the requirements file that was created for the corresponding env. Repeat step 8 for all other required env creation.
 
+11. To delete an env: `conda remove -n ENV_NAME --all`
 
 
 ### Done! You should be ready to go! 
